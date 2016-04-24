@@ -1,0 +1,16 @@
+version: '2'
+services:
+    ulianko-app:
+        image: ulianko
+        external_links:
+            - ulianko-mongodb:mongodb
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017
+            - SPRING_DATA_MONGODB_DATABASE=ulianko
+        ports:
+            - 8080:8080
+    ulianko-mongodb:
+        extends:
+            file: mongodb.yml
+            service: ulianko-mongodb

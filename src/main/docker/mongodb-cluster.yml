@@ -1,0 +1,17 @@
+version: '2'
+services:
+    ulianko-mongodb:
+        container_name: ulianko-mongodb
+        image: mongo:3.2.3
+        ports:
+            - "27017:27017"
+        command: mongos --configdb ulianko-mongodb-config
+    ulianko-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    ulianko-mongodb-config:
+        image: mongo:3.2.3
+        container_name: ulianko-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db
